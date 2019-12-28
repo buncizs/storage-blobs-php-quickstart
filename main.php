@@ -89,9 +89,23 @@ $connectionString = "DefaultEndpointsProtocol=https;AccountName=luqmanhmmacdweba
 $blobClient = BlobRestProxy::createBlobService($connectionString);
 
 //$fileToUpload = "koplak.jpg";
+
 //buat upload
-print_r($_FILES);
-$fileToUpload=$_FILES['berkas']['tmp_name'];
+$namaFileOriginial = $_FILES['berkas']['name'];
+$namaSementara = $_FILES['berkas']['tmp_name'];
+// pindahkan file
+$terupload = move_uploaded_file($namaSementara, "./".$namaFileOriginial);
+
+if ($terupload) {
+    echo "Sukses upload, silahkan tekan analyze";
+	echo "<br> <br>";
+    $fileToUpload=$namaFileOriginial;
+} else {
+    echo "Upload Gagal!";
+	$fileToUpload=$_FILES['berkas']['tmp_name'];
+}
+
+
     // Create container options object.
     $createContainerOptions = new CreateContainerOptions();
     $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
@@ -131,7 +145,7 @@ $fileToUpload=$_FILES['berkas']['tmp_name'];
             $result = $blobClient->listBlobs($containerName, $listBlobsOptions);
             foreach ($result->getBlobs() as $blob)
             {
-                echo $blob->getName().": ".$blob->getUrl()."<br />";
+                echo $blob->getName()." <br> <br> This Resources can be accessed via: ".$blob->getUrl()."<br />";
             }
 			
             $listBlobsOptions->setContinuationToken($result->getContinuationToken());
@@ -158,8 +172,8 @@ $fileToUpload=$_FILES['berkas']['tmp_name'];
 
  
 
-echo "<input type=\"text\" name=\"inputImage\" id=\"inputImage\"";
-    echo "value=\"";echo $blob->getUrl();echo "\"/>";
+echo "<input type=\"text\" name=\"inputImage\" id=\"inputImage\" ";
+    echo "value=\"";echo $blob->getUrl();echo "\" readonly/>";
 ?>
 <button onclick="processImage()" value=>Analyze image</button>
 <br><br>
