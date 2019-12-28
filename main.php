@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Analyze Sample</title>
+    <title>LUQMANHM IMAGE ANALYZER</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
 <body>
@@ -28,7 +28,7 @@
  
         // Request parameters.
         var params = {
-            "visualFeatures": "Categories,Description,Color",
+            "visualFeatures": "Description",
             "details": "",
             "language": "en",
         };
@@ -182,7 +182,7 @@ echo "<input type=\"text\" name=\"inputImage\" id=\"inputImage\" ";
         Response:
         <br><br>
         <textarea id="responseTextArea" class="UIInput"
-                  style="width:580px; height:400px;"></textarea>
+                  style="width:580px; height:700px;" readonly></textarea>
     </div>
     <div id="imageDiv" style="width:420px; display:table-cell;">
         Source image:
